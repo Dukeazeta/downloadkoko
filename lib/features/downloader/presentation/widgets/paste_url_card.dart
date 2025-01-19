@@ -21,7 +21,7 @@ class PasteUrlCard extends ConsumerWidget {
             Text(
               'downloadkoko',
               style: theme.textTheme.titleLarge?.copyWith(
-                fontFamily: 'KokoFont',
+                fontFamily: 'ClashGrotesk',
                 fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,

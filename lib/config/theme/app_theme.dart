@@ -53,7 +53,9 @@ class AppTheme {
       error: errorColor,
       background: backgroundColor,
     ),
-    textTheme: GoogleFonts.poppinsTextTheme(),
+    textTheme: GoogleFonts.poppinsTextTheme().apply(
+      fontFamily: 'ClashGrotesk',
+    ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: _elevatedButtonStyle.copyWith(
         backgroundColor: MaterialStateProperty.resolveWith((states) {
@@ -101,7 +103,9 @@ class AppTheme {
       background: darkBackgroundColor,
       surface: darkSurfaceColor,
     ),
-    textTheme: GoogleFonts.poppinsTextTheme(ThemeData.dark().textTheme),
+    textTheme: GoogleFonts.poppinsTextTheme(ThemeData.dark().textTheme).apply(
+      fontFamily: 'ClashGrotesk',
+    ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: _elevatedButtonStyle.copyWith(
         backgroundColor: MaterialStateProperty.resolveWith((states) {

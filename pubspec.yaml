@@ -62,9 +62,9 @@ flutter:
   uses-material-design: true
 
   fonts:
-    - family: KokoFont
+    - family: ClashGrotesk
       fonts:
-        - asset: assets/fonts/KokoFont.ttf
+        - asset: assets/fonts/ClashGrotesk_Complete/Fonts/TTF/ClashGrotesk-Variable.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:

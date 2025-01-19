@@ -30,7 +30,7 @@ class HomeScreen extends ConsumerWidget {
                         Text(
                           'downloadkoko',
                           style: theme.textTheme.headlineMedium?.copyWith(
-                            fontFamily: 'KokoFont',
+                            fontFamily: 'ClashGrotesk',
                             fontWeight: FontWeight.bold,
                             color: theme.colorScheme.primary,
                           ),
