@@ -2,13 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:downloadkoko/config/constants/app_constants.dart';
 import '../../../shared/widgets/custom_button.dart';
+import '../providers/download_provider.dart';
 
-class PasteUrlCard extends ConsumerWidget {
+class PasteUrlCard extends ConsumerStatefulWidget {
   const PasteUrlCard({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<PasteUrlCard> createState() => _PasteUrlCardState();
+}
+
+class _PasteUrlCardState extends ConsumerState<PasteUrlCard> {
+  final _urlController = TextEditingController();
+
+  @override
+  void dispose() {
+    _urlController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final downloadState = ref.watch(downloadProvider);
     
     return Card(
       margin: EdgeInsets.zero,
@@ -34,6 +49,7 @@ class PasteUrlCard extends ConsumerWidget {
             ),
             const SizedBox(height: AppConstants.defaultSpacing * 2),
             TextField(
+              controller: _urlController,
               style: theme.textTheme.bodyLarge,
               decoration: InputDecoration(
                 hintText: 'Paste URL here',
@@ -63,9 +79,25 @@ class PasteUrlCard extends ConsumerWidget {
                   horizontal: AppConstants.defaultPadding,
                   vertical: AppConstants.defaultPadding,
                 ),
+                errorText: downloadState.status == DownloadStatus.error
+                    ? downloadState.error
+                    : null,
               ),
             ),
             const SizedBox(height: AppConstants.defaultSpacing * 2),
+            if (downloadState.status == DownloadStatus.downloading)
+              Column(
+                children: [
+                  LinearProgressIndicator(
+                    value: downloadState.progress,
+                    backgroundColor: theme.colorScheme.primary.withOpacity(0.1),
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      theme.colorScheme.primary,
+                    ),
+                  ),
+                  const SizedBox(height: AppConstants.defaultSpacing * 2),
+                ],
+              ),
             Container(
               decoration: BoxDecoration(
                 boxShadow: [
@@ -77,11 +109,28 @@ class PasteUrlCard extends ConsumerWidget {
                 ],
               ),
               child: CustomButton(
-                text: 'Download Now',
-                icon: Icons.download_rounded,
-                onPressed: () {
-                  // TODO: Implement download logic
-                },
+                text: downloadState.status == DownloadStatus.downloading
+                    ? 'Downloading...'
+                    : downloadState.status == DownloadStatus.completed
+                        ? 'Download Complete'
+                        : 'Download Now',
+                icon: downloadState.status == DownloadStatus.completed
+                    ? Icons.check_rounded
+                    : Icons.download_rounded,
+                onPressed: downloadState.status == DownloadStatus.downloading ||
+                        downloadState.status == DownloadStatus.loading
+                    ? () {} 
+                    : () {
+                        if (downloadState.status == DownloadStatus.completed) {
+                          ref.read(downloadProvider.notifier).reset();
+                          _urlController.clear();
+                        } else {
+                          ref
+                              .read(downloadProvider.notifier)
+                              .downloadVideo(_urlController.text);
+                        }
+                      },
+                isLoading: downloadState.status == DownloadStatus.loading,
               ),
             ),
           ],
