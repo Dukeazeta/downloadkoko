@@ -28,13 +28,14 @@ class CustomButton extends StatelessWidget {
     
     final button = Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: theme.colorScheme.primary,
+        borderRadius: BorderRadius.circular(8),
+        color: const Color(0xFF4CAF50), // Material Green
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            offset: const Offset(0, 4),
+            color: Colors.black.withOpacity(0.3),
+            offset: const Offset(0, 3),
             blurRadius: 0,
+            spreadRadius: 0,
           ),
         ],
       ),
@@ -42,11 +43,11 @@ class CustomButton extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: isLoading ? null : onPressed,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           child: Container(
             padding: EdgeInsets.symmetric(
               horizontal: isSmall ? 16 : 24,
-              vertical: isSmall ? 8 : 16,
+              vertical: isSmall ? 8 : 12,
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -75,8 +76,15 @@ class CustomButton extends StatelessWidget {
                   style: (isSmall 
                       ? theme.textTheme.labelMedium 
                       : theme.textTheme.labelLarge)?.copyWith(
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                     color: Colors.white,
+                    shadows: [
+                      Shadow(
+                        offset: const Offset(0, 1),
+                        blurRadius: 1,
+                        color: Colors.black.withOpacity(0.3),
+                      ),
+                    ],
                   ),
                 ),
               ],
