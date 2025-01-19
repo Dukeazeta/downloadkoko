@@ -26,71 +26,66 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     
-    final button = isOutlined
-        ? OutlinedButton(
-            onPressed: isLoading ? null : onPressed,
-            style: isSmall
-                ? theme.outlinedButtonTheme.style?.copyWith(
-                    padding: MaterialStateProperty.all(
-                      const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 8,
-                      ),
+    final button = Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: theme.colorScheme.primary,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            offset: const Offset(0, 4),
+            blurRadius: 0,
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: isLoading ? null : onPressed,
+          borderRadius: BorderRadius.circular(12),
+          child: Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: isSmall ? 16 : 24,
+              vertical: isSmall ? 8 : 16,
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (isLoading) ...[
+                  SizedBox(
+                    width: 16,
+                    height: 16,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
                     ),
-                    minimumSize: MaterialStateProperty.all(Size.zero),
-                  )
-                : null,
-            child: _buildButtonContent(theme),
-          )
-        : ElevatedButton(
-            onPressed: isLoading ? null : onPressed,
-            style: isSmall
-                ? theme.elevatedButtonTheme.style?.copyWith(
-                    padding: MaterialStateProperty.all(
-                      const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 8,
-                      ),
-                    ),
-                    minimumSize: MaterialStateProperty.all(Size.zero),
-                  )
-                : null,
-            child: _buildButtonContent(theme),
-          );
-
-    return button.animate().fadeIn().scale();
-  }
-
-  Widget _buildButtonContent(ThemeData theme) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        if (isLoading) ...[
-          SizedBox(
-            width: 16,
-            height: 16,
-            child: CircularProgressIndicator(
-              strokeWidth: 2,
-              valueColor: AlwaysStoppedAnimation<Color>(
-                isOutlined ? theme.colorScheme.primary : Colors.white,
-              ),
+                  ),
+                  const SizedBox(width: AppConstants.defaultSpacing),
+                ] else if (icon != null) ...[
+                  Icon(
+                    icon,
+                    size: isSmall ? 16 : 20,
+                    color: Colors.white,
+                  ),
+                  const SizedBox(width: AppConstants.defaultSpacing),
+                ],
+                Text(
+                  text,
+                  style: (isSmall 
+                      ? theme.textTheme.labelMedium 
+                      : theme.textTheme.labelLarge)?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
             ),
           ),
-          const SizedBox(width: AppConstants.defaultSpacing),
-        ] else if (icon != null) ...[
-          Icon(icon, size: isSmall ? 16 : 20),
-          const SizedBox(width: AppConstants.defaultSpacing),
-        ],
-        Text(
-          text,
-          style: (isSmall 
-              ? theme.textTheme.labelMedium 
-              : theme.textTheme.labelLarge)?.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
         ),
-      ],
+      ),
     );
+
+    return button.animate().fadeIn().scale();
   }
 }

@@ -12,21 +12,19 @@ class PasteUrlCard extends ConsumerWidget {
     
     return Card(
       margin: EdgeInsets.zero,
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppConstants.defaultRadius),
+        side: BorderSide(
+          color: theme.colorScheme.outline.withOpacity(0.1),
+        ),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(AppConstants.defaultPadding),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              'downloadkoko',
-              style: theme.textTheme.titleLarge?.copyWith(
-                fontFamily: 'ClashGrotesk',
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: AppConstants.defaultSpacing),
             Text(
               'Enter a URL to start downloading',
               style: theme.textTheme.bodyMedium?.copyWith(
@@ -68,12 +66,23 @@ class PasteUrlCard extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: AppConstants.defaultSpacing * 2),
-            CustomButton(
-              text: 'Download Now',
-              icon: Icons.download_rounded,
-              onPressed: () {
-                // TODO: Implement download logic
-              },
+            Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    offset: const Offset(0, 4),
+                    blurRadius: 4,
+                  ),
+                ],
+              ),
+              child: CustomButton(
+                text: 'Download Now',
+                icon: Icons.download_rounded,
+                onPressed: () {
+                  // TODO: Implement download logic
+                },
+              ),
             ),
           ],
         ),

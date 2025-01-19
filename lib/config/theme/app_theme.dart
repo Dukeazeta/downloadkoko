@@ -8,13 +8,13 @@ class AppTheme {
   AppTheme._();
 
   // Brand Colors
-  static const primaryColor = Color(0xFF6C63FF);
+  static const primaryColor = Color(0xFF2196F3);
   static const secondaryColor = Color(0xFF2A2A2A);
   static const backgroundColor = Color(0xFFFAFAFA);
   static const errorColor = Color(0xFFE57373);
 
   // Dark Colors
-  static const darkPrimaryColor = Color(0xFF8B85FF);
+  static const darkPrimaryColor = Color(0xFF42A5F5);
   static const darkBackgroundColor = Color(0xFF121212);
   static const darkSurfaceColor = Color(0xFF1E1E1E);
 
